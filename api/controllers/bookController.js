@@ -1,4 +1,6 @@
 var service = require("../services/book.service");
+var isValidISBN = require("../helpers/validation");
+var checkRequiredFields = require("../helpers/validation");
 
 // Display list of all books.
 exports.book_list = async function (req, res) {
@@ -32,8 +34,14 @@ exports.book_detail = async function (req, res) {
 
 // Handle book create on POST.
 exports.book_create_post = async function (req, res) {
+  const book = req.body.book;
+  const errors = checkRequiredFields(book);
+  if (errors) {
+    res.send(errors.error);
+  }
+  if (!isValidISBN(book.isbn)) res.send("ISBN length is not valid");
   try {
-    let bookRes = await service.createBook(req.body.book);
+    let bookRes = await service.createBook(book);
     return res.status(200).json({
       data: bookRes,
     });
@@ -60,8 +68,14 @@ exports.book_delete = async function (req, res) {
 
 // Handle book update on POST.
 exports.book_update_post = async function (req, res) {
+  const book = req.body.book;
+  const errors = checkRequiredFields(book);
+  if (errors) {
+    res.send(errors.error);
+  }
+  if (!isValidISBN(book.isbn)) res.send("ISBN length is not valid");
   try {
-    let bookRes = await service.updateBook(req.params.id, req.body.book);
+    let bookRes = await service.updateBook(req.params.id, book);
     return res.status(200).json({
       data: bookRes,
     });
