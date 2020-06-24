@@ -32,7 +32,6 @@ exports.book_detail = async function (req, res) {
 
 // Handle book create on POST.
 exports.book_create_post = async function (req, res) {
-  // res.send("NOT IMPLEMENTED: Book create POST");
   try {
     let bookRes = await service.createBook(req.body.book);
     return res.status(200).json({
@@ -47,7 +46,6 @@ exports.book_create_post = async function (req, res) {
 
 // Handle book delete on POST.
 exports.book_delete = async function (req, res) {
-  // res.send("NOT IMPLEMENTED: Book delete POST");
   try {
     let bookRes = await service.deleteBook(req.params.id);
     return res.status(200).json({

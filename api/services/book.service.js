@@ -15,7 +15,7 @@ exports.createBook = function (book) {
   return new Promise((resolve, reject) => {
     // const book = req.body.book;
     fs.readFile("books.json", function (err, data) {
-      if (err) next(err);
+      if (err) reject(err);
 
       var arrayOfObjects = JSON.parse(data);
       const filterBooks = arrayOfObjects.books.filter(
@@ -69,7 +69,7 @@ exports.deleteBook = function (bookId) {
 exports.updateBook = function (bookId, book) {
   return new Promise((resolve, reject) => {
     fs.readFile("books.json", (error, data) => {
-      if (error) next(error);
+      if (error) reject(error);
 
       const booksJson = JSON.parse(data);
       const index = booksJson.books.findIndex((x) => x.book_id === bookId);
